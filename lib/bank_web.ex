@@ -62,6 +62,7 @@ defmodule BankWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
+      import BankWeb.AccountHelpers
       import BankWeb.ErrorHelpers
       import BankWeb.Gettext
       alias BankWeb.Router.Helpers, as: Routes
