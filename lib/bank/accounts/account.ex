@@ -16,8 +16,8 @@ defmodule Bank.Accounts.Account do
     field :referral_code, :integer
     field :state, :string
 
-    has_many :indications, Indication, foreign_key: "src_id"
-    has_one :indicated, Indication, foreign_key: "dest_id"
+    has_many :indications, Indication
+    has_one :indicated, Indication
 
     timestamps()
   end

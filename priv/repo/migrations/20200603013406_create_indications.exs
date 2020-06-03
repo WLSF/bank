@@ -3,13 +3,13 @@ defmodule Bank.Repo.Migrations.CreateIndications do
 
   def change do
     create table(:indications) do
-      add :src_id, references("accounts")
-      add :dest_id, references("accounts")
-      add :referral_code, :integer
+      add :sender_id, references(:accounts, on_delete: :delete_all)
+      add :receiver_id, references(:accounts, on_delete: :delete_all)
 
       timestamps()
     end
 
-    create unique_index(:indications, [:src_id, :dest_id])
+    create index(:indications, [:sender_id])
+    create index(:indications, [:receiver_id])
   end
 end

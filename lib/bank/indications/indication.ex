@@ -5,10 +5,8 @@ defmodule Bank.Indications.Indication do
   alias Bank.Accounts.Account
 
   schema "indications" do
-    field :referral_code, :integer
-
-    belongs_to :src, Account
-    belongs_to :dest, Account
+    belongs_to :sender, Account
+    belongs_to :receiver, Account
 
     timestamps()
   end
@@ -16,7 +14,7 @@ defmodule Bank.Indications.Indication do
   @doc false
   def changeset(indication, attrs) do
     indication
-    |> cast(attrs, [:src_id, :dest_id, :referral_code])
-    |> validate_required([:src_id, :dest_id, :referral_code])
+    |> cast(attrs, [:sender_id, :receiver_id])
+    |> validate_required([:sender_id, :receiver_id])
   end
 end

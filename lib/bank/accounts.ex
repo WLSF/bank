@@ -25,6 +25,7 @@ defmodule Bank.Accounts do
   end
 
   def get_by_cpf(cpf), do: Repo.get_by(Account, cpf: cpf)
+  def get_by_code(code), do: Repo.get_by(Account, referral_code: code)
 
   defp create_account(attrs \\ %{}) do
     account = %Account{}
