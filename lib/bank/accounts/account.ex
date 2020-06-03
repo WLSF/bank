@@ -2,6 +2,7 @@ defmodule Bank.Accounts.Account do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Bank.Indications.Indication
   alias Bank.InvitationCodeGenerator, as: CodeGenerator
 
   schema "accounts" do
@@ -14,6 +15,9 @@ defmodule Bank.Accounts.Account do
     field :name, :string
     field :referral_code, :integer
     field :state, :string
+
+    has_many :indications, Indication, foreign_key: "src_id"
+    has_one :indicated, Indication, foreign_key: "dest_id"
 
     timestamps()
   end

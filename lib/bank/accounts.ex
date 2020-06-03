@@ -24,7 +24,7 @@ defmodule Bank.Accounts do
     end
   end
 
-  defp get_by_cpf(cpf), do: Repo.get_by(Account, cpf: cpf)
+  def get_by_cpf(cpf), do: Repo.get_by(Account, cpf: cpf)
 
   defp create_account(attrs \\ %{}) do
     account = %Account{}

@@ -9,6 +9,6 @@ defmodule BankWeb.Router do
     pipe_through :api
 
     resources "/accounts", AccountController, only: [:create]
-    resources "/indications", IndicationsController, only: [:index]
+    resources "/accounts/:cpf_number/indications", IndicationsController, only: [:index]
   end
 end
