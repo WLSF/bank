@@ -2,6 +2,8 @@ defmodule Bank.Accounts.Account do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Bank.InvitationCodeGenerator, as: CodeGenerator
+
   schema "accounts" do
     field :birth_date, :date
     field :city, :string
@@ -25,12 +27,17 @@ defmodule Bank.Accounts.Account do
     |> unique_constraint([:cpf])
   end
 
-  def get_status(account) do
+  def account_complete?(account) do
     result = account.name && account.email && account.birth_date && account.gender && account.city && account.state && account.country
 
     case result do
-      nil -> "incompleto"
-      _   -> "completo"
+      nil -> false
+      _   -> true
     end
+  end
+
+  def add_referral_code(account) do
+    account
+    |> change(referral_code: CodeGenerator.call())
   end
 end

@@ -27,14 +27,27 @@ defmodule Bank.Accounts do
   defp get_by_cpf(cpf), do: Repo.get_by(Account, cpf: cpf)
 
   defp create_account(attrs \\ %{}) do
-    %Account{}
+    account = %Account{}
     |> Account.changeset(attrs)
     |> Repo.insert()
+    |> generate_code_if_account_is_complete()
   end
 
   defp update_account(account, attrs \\ %{}) do
-    account
+    account = account
     |> Account.changeset(attrs)
     |> Repo.update()
+    |> generate_code_if_account_is_complete()
+  end
+
+  defp generate_code_if_account_is_complete(result = {:error, account}), do: result
+  defp generate_code_if_account_is_complete(result = {:ok, account}) do
+    case Account.account_complete?(account) do
+      true  -> account
+                |> Account.add_referral_code
+                |> Repo.update()
+
+      false -> result
+    end
   end
 end

@@ -6,15 +6,15 @@ defmodule Bank.AccountsTest do
   describe "accounts" do
     alias Bank.Accounts.Account
 
-    @valid_attrs %{birth_date: ~D[2010-04-17], city: "some city", country: "some country", cpf: "some cpf", email: "some email", gender: "some gender", name: "some name", referral_code: 42, state: "some state"}
-    @update_attrs %{birth_date: ~D[2011-05-18], city: "some updated city", country: "some updated country", cpf: "some updated cpf", email: "some updated email", gender: "some updated gender", name: "some updated name", referral_code: 43, state: "some updated state"}
-    @invalid_attrs %{birth_date: nil, city: nil, country: nil, cpf: nil, email: nil, gender: nil, name: nil, referral_code: nil, state: nil}
+    @valid_attrs %{birth_date: ~D[2010-04-17], city: "some city", country: "some country", cpf: "02390213285", email: "some@email.com", gender: "some gender", name: "some name", state: "some state"}
+    @update_attrs %{birth_date: ~D[2011-05-18], city: "some updated city", country: "some updated country", cpf: "02390213285", email: "someupdated@email.com", gender: "some updated gender", name: "some updated name", state: "some updated state"}
+    @invalid_attrs %{cpf: nil, email: "nil"}
 
     def account_fixture(attrs \\ %{}) do
       {:ok, account} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Accounts.create_account()
+        |> Accounts.create_or_update_account()
 
       account
     end
@@ -24,57 +24,39 @@ defmodule Bank.AccountsTest do
       assert Accounts.list_accounts() == [account]
     end
 
-    test "get_account!/1 returns the account with given id" do
-      account = account_fixture()
-      assert Accounts.get_account!(account.id) == account
-    end
-
-    test "create_account/1 with valid data creates a account" do
-      assert {:ok, %Account{} = account} = Accounts.create_account(@valid_attrs)
+    test "create_or_update_account/1 with valid data creates an account" do
+      assert {:ok, %Account{} = account} = Accounts.create_or_update_account(@valid_attrs)
       assert account.birth_date == ~D[2010-04-17]
       assert account.city == "some city"
       assert account.country == "some country"
       assert account.cpf == "some cpf"
-      assert account.email == "some email"
+      assert account.email == "some@email.com"
       assert account.gender == "some gender"
       assert account.name == "some name"
-      assert account.referral_code == 42
       assert account.state == "some state"
     end
 
     test "create_account/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_account(@invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_or_update_account(@invalid_attrs)
     end
 
-    test "update_account/2 with valid data updates the account" do
+    test "create_or_update_account/1 with valid data updates the account" do
       account = account_fixture()
-      assert {:ok, %Account{} = account} = Accounts.update_account(account, @update_attrs)
+      assert {:ok, %Account{} = account} = Accounts.create_or_update_account(account, @update_attrs)
       assert account.birth_date == ~D[2011-05-18]
       assert account.city == "some updated city"
       assert account.country == "some updated country"
-      assert account.cpf == "some updated cpf"
+      assert account.cpf == "some cpf"
       assert account.email == "some updated email"
       assert account.gender == "some updated gender"
       assert account.name == "some updated name"
-      assert account.referral_code == 43
       assert account.state == "some updated state"
     end
 
     test "update_account/2 with invalid data returns error changeset" do
       account = account_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_account(account, @invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_or_update_account(account, @invalid_attrs)
       assert account == Accounts.get_account!(account.id)
-    end
-
-    test "delete_account/1 deletes the account" do
-      account = account_fixture()
-      assert {:ok, %Account{}} = Accounts.delete_account(account)
-      assert_raise Ecto.NoResultsError, fn -> Accounts.get_account!(account.id) end
-    end
-
-    test "change_account/1 returns a account changeset" do
-      account = account_fixture()
-      assert %Ecto.Changeset{} = Accounts.change_account(account)
     end
   end
 end
