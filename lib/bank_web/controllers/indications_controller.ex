@@ -11,7 +11,6 @@ defmodule BankWeb.IndicationsController do
     indications = number
     |> Accounts.get_by_cpf()
     |> Indications.list_indications_from_account()
-    |> IO.inspect
 
     conn
     |> put_status(:ok)

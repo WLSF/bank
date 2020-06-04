@@ -7,15 +7,16 @@ defmodule Bank.Accounts do
   alias Bank.Repo
 
   alias Bank.Accounts.Account
+  alias Bank.MapReader
 
   def list_accounts do
     Repo.all(Account)
   end
 
   def create_or_update_account(attrs \\ %{}) do
-    account = 
+    account =
       attrs
-      |> Map.get("cpf")
+      |> MapReader.get("cpf")
       |> get_by_cpf()
 
     case account do
@@ -24,18 +25,20 @@ defmodule Bank.Accounts do
     end
   end
 
+  def get_by_cpf(nil), do: nil
   def get_by_cpf(cpf), do: Repo.get_by(Account, cpf: cpf)
+
   def get_by_code(code), do: Repo.get_by(Account, referral_code: code)
 
   defp create_account(attrs \\ %{}) do
-    account = %Account{}
+    %Account{}
     |> Account.changeset(attrs)
     |> Repo.insert()
     |> generate_code_if_account_is_complete()
   end
 
   defp update_account(account, attrs \\ %{}) do
-    account = account
+    account
     |> Account.changeset(attrs)
     |> Repo.update()
     |> generate_code_if_account_is_complete()
