@@ -1,4 +1,4 @@
-defmodule Bank.InvitationCodeGenerator do
+defmodule BankWeb.Utils.InvitationCodeGenerator do
   import Ecto.UUID, only: [generate: 0]
 
   def call() do

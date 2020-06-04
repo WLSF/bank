@@ -7,7 +7,7 @@ defmodule BankWeb.Repositories.Accounts do
   alias Bank.Repo
 
   alias BankWeb.Models.Account
-  alias Bank.MapReader
+  alias BankWeb.Utils.MapReader
 
   def list_accounts do
     Repo.all(Account)

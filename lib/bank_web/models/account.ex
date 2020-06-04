@@ -2,7 +2,7 @@ defmodule BankWeb.Models.Account do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Bank.InvitationCodeGenerator, as: CodeGenerator
+  alias BankWeb.Utils.InvitationCodeGenerator, as: CodeGenerator
 
   schema "accounts" do
     field :birth_date, :date
