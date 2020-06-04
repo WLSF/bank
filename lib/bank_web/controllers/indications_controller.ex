@@ -1,8 +1,10 @@
 defmodule BankWeb.IndicationsController do
   use BankWeb, :controller
 
-  alias Bank.Accounts
-  alias Bank.Indications
+  alias BankWeb.Repositories.{
+    Accounts,
+    Indications
+  }
 
   action_fallback BankWeb.FallbackController
 

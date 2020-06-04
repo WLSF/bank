@@ -1,8 +1,8 @@
-defmodule Bank.Indications.Indication do
+defmodule BankWeb.Models.Indication do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Bank.Accounts.Account
+  alias BankWeb.Models.Account
 
   schema "indications" do
     belongs_to :sender, Account

@@ -1,14 +1,16 @@
 defmodule BankWeb.AccountController do
   use BankWeb, :controller
 
-  alias Bank.Accounts
-  alias Bank.Accounts.Account
-  alias Bank.Indications
+  alias BankWeb.Models.Account
+  alias BankWeb.Repositories.{
+    Accounts,
+    Indications
+  }
 
   action_fallback BankWeb.FallbackController
 
   def index(conn, _params) do
-    accounts = Accounts.list_accounts() |> IO.inspect
+    accounts = Accounts.list_accounts()
     render(conn, "index.json", accounts: accounts)
   end
 

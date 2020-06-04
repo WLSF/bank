@@ -1,4 +1,4 @@
-defmodule Bank.Indications do
+defmodule BankWeb.Repositories.Indications do
   @moduledoc """
   The Accounts context.
   """
@@ -6,9 +6,9 @@ defmodule Bank.Indications do
   import Ecto.Query, warn: false
   alias Bank.Repo
   
-  alias Bank.{
-    Accounts.Account,
-    Indications.Indication
+  alias BankWeb.Models.{
+    Account,
+    Indication
   }
 
   def list_indications_from_account(sender) do

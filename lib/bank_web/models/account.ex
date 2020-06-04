@@ -1,8 +1,7 @@
-defmodule Bank.Accounts.Account do
+defmodule BankWeb.Models.Account do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Bank.Indications.Indication
   alias Bank.InvitationCodeGenerator, as: CodeGenerator
 
   schema "accounts" do
@@ -15,9 +14,6 @@ defmodule Bank.Accounts.Account do
     field :name, :string
     field :referral_code, :integer
     field :state, :string
-
-    has_many :indications, Indication
-    has_one :indicated, Indication
 
     timestamps()
   end

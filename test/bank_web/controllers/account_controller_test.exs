@@ -1,7 +1,7 @@
 defmodule BankWeb.AccountControllerTest do
   use BankWeb.ConnCase
 
-  alias Bank.Accounts
+  alias BankWeb.Repositories.Accounts
 
   @create_attrs %{
     birth_date: ~D[2010-04-17],

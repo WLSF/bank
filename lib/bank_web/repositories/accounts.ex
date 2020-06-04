@@ -1,4 +1,4 @@
-defmodule Bank.Accounts do
+defmodule BankWeb.Repositories.Accounts do
   @moduledoc """
   The Accounts context.
   """
@@ -6,7 +6,7 @@ defmodule Bank.Accounts do
   import Ecto.Query, warn: false
   alias Bank.Repo
 
-  alias Bank.Accounts.Account
+  alias BankWeb.Models.Account
   alias Bank.MapReader
 
   def list_accounts do

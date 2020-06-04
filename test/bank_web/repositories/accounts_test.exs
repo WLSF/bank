@@ -1,11 +1,11 @@
 defmodule Bank.AccountsTest do
   use Bank.DataCase
 
-  alias Bank.Accounts
+  alias BankWeb.Repositories.Accounts
   alias Bank.Repo
 
   describe "accounts" do
-    alias Bank.Accounts.Account
+    alias BankWeb.Models.Account
 
     @valid_attrs %{birth_date: ~D[2010-04-17], city: "some city", country: "some country", cpf: "02390213285", email: "some@email.com", gender: "some gender", name: "some name", state: "some state"}
     @update_attrs %{birth_date: ~D[2011-05-18], city: "some updated city", country: "some updated country", cpf: "02390213285", email: "someupdated@email.com", gender: "some updated gender", name: "some updated name", state: "some updated state"}
