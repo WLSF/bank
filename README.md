@@ -4,6 +4,7 @@
 * [All the endpoints available on the API](https://github.com/WLSF/bank/wiki/Endpoints)
 * [The project structure and design](https://github.com/WLSF/bank/wiki/Project-Design)
 
+## Setting up the localhost
 
 To start your Phoenix server:
 
@@ -23,7 +24,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
 
-### Contributing
+## Contributing
 
 To start contributing with this repository, you must: 
 
