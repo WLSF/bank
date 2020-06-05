@@ -1,7 +1,7 @@
 defmodule BankWeb.AccountControllerTest do
   use BankWeb.ConnCase
 
-  alias BankWeb.Repositories.Accounts
+  alias Bank.Factory
 
   @create_attrs %{
     birth_date: ~D[2010-04-17],
@@ -24,11 +24,6 @@ defmodule BankWeb.AccountControllerTest do
     state: "some updated state"
   }
   @invalid_attrs %{birth_date: nil, city: nil, country: nil, cpf: nil, email: "email", gender: nil, name: nil, referral_code: nil, state: nil}
-
-  def fixture(:account) do
-    {:ok, account} = Accounts.create_or_update_account(@create_attrs)
-    account
-  end
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -98,7 +93,7 @@ defmodule BankWeb.AccountControllerTest do
   end
 
   defp create_account(_) do
-    account = fixture(:account)
+    account = Factory.insert!(:account)
     %{account: account}
   end
 end

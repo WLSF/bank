@@ -3,6 +3,7 @@ defmodule Bank.AccountsTest do
 
   alias BankWeb.Repositories.Accounts
   alias Bank.Repo
+  alias Bank.Factory
 
   describe "accounts" do
     alias BankWeb.Models.Account
@@ -11,17 +12,8 @@ defmodule Bank.AccountsTest do
     @update_attrs %{birth_date: ~D[2011-05-18], city: "some updated city", country: "some updated country", cpf: "02390213285", email: "someupdated@email.com", gender: "some updated gender", name: "some updated name", state: "some updated state"}
     @invalid_attrs %{cpf: nil, email: "nil"}
 
-    def account_fixture(attrs \\ %{}) do
-      {:ok, account} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Accounts.create_or_update_account()
-
-      account
-    end
-
     test "list_accounts/0 returns all accounts" do
-      account = account_fixture()
+      account = Factory.insert!(:account)
       assert Accounts.list_accounts() == [account]
     end
 
@@ -54,7 +46,7 @@ defmodule Bank.AccountsTest do
     end
 
     test "create_or_update_account/1 update with invalid data returns error changeset" do
-      account = account_fixture()
+      account = Factory.insert!(:account)
       assert {:error, %Ecto.Changeset{}} = Accounts.create_or_update_account(@invalid_attrs)
       assert account == Repo.get!(Account, account.id)
     end
