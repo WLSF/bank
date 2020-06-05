@@ -28,3 +28,5 @@ bank-*.tar
 /priv/static/
 
 db-data
+
+config/prod.secret.exs
