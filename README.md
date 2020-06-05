@@ -1,5 +1,10 @@
 # Bank
 
+**WIKI** (insights about the project):
+* [All the endpoints available on the API](https://github.com/WLSF/bank/wiki/Endpoints)
+* [The project structure and design](https://github.com/WLSF/bank/wiki/Project-Design)
+
+
 To start your Phoenix server:
 
   * Boot and set up your docker and the postgres container with `docker-compose up --build -d`
