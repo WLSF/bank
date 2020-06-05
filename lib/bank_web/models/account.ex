@@ -24,6 +24,7 @@ defmodule BankWeb.Models.Account do
     |> cast(attrs, [:name, :email, :cpf, :birth_date, :gender, :city, :state, :country])
     |> validate_required([:cpf])
     |> validate_format(:email, ~r/@/)
+    |> validate_format(:cpf, ~r/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)
     |> unique_constraint([:cpf])
   end
 

@@ -1,6 +1,7 @@
 defmodule BankWeb.AccountController do
   use BankWeb, :controller
 
+  alias BankWeb.Utils.Auth
   alias BankWeb.Models.Account
   alias BankWeb.Repositories.{
     Accounts,
@@ -8,11 +9,6 @@ defmodule BankWeb.AccountController do
   }
 
   action_fallback BankWeb.FallbackController
-
-  def index(conn, _params) do
-    accounts = Accounts.list_accounts()
-    render(conn, "index.json", accounts: accounts)
-  end
 
   def create(conn, %{"account" => account_params}) do
     with {:ok, %Account{} = account} <- Accounts.create_or_update_account(account_params) do
@@ -30,6 +26,13 @@ defmodule BankWeb.AccountController do
       conn
       |> put_status(:created)
       |> render("show.json", account: account)
+    end
+  end
+
+  def login(conn, %{"email" => email, "cpf" => cpf}) do
+    with {:ok, token, _claims} <- Auth.login(email, cpf) do
+      conn
+      |> json(%{jwt: token})
     end
   end
 end

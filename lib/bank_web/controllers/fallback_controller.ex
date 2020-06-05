@@ -21,4 +21,22 @@ defmodule BankWeb.FallbackController do
     |> put_view(BankWeb.ErrorView)
     |> render(:"404")
   end
+
+  def call(conn, {:error, :unauthorized}) do
+    conn
+    |> put_status(:unauthorized)
+    |> json(%{message: "Você não tem permissão para isso"})
+  end
+
+  def call(conn, {:error, :wrong_login}) do
+    conn
+    |> put_status(:unauthorized)
+    |> json(%{message: "Login incorreto"})
+  end
+
+  def call(conn, {:error, :incomplete_account}) do
+    conn
+    |> put_status(:bad_request)
+    |> json(%{message: "Sua conta não está completa"})
+  end
 end

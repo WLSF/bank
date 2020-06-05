@@ -7,7 +7,7 @@ defmodule BankWeb.AccountControllerTest do
     birth_date: ~D[2010-04-17],
     city: "some city",
     country: "some country",
-    cpf: "13451520",
+    cpf: "123.456.789-00",
     email: "some@email.com",
     gender: "some gender",
     name: "some name",
@@ -17,7 +17,7 @@ defmodule BankWeb.AccountControllerTest do
     birth_date: ~D[2011-05-18],
     city: "some updated city",
     country: "some updated country",
-    cpf: "13451520",
+    cpf: "987.654.321-00",
     email: "someupdated@email.com",
     gender: "some updated gender",
     name: "some updated name",
@@ -29,10 +29,18 @@ defmodule BankWeb.AccountControllerTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
-  describe "index" do
-    test "lists all accounts", %{conn: conn} do
-      conn = get(conn, Routes.account_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
+  describe "login" do
+    test "using a valid account", %{conn: conn} do
+      account = Factory.insert!(:account)
+      conn = post(conn, Routes.account_path(conn, :login), %{email: account.email, cpf: account.cpf})
+      response = json_response(conn, 200)
+      assert response["jwt"] != nil
+    end
+
+    test "using an invalid account", %{conn: conn} do
+      conn = post(conn, Routes.account_path(conn, :login), %{email: "emailqualquer@oi.com", cpf: "cpf_qualquer"})
+      response = json_response(conn, 401)
+      assert response["message"] =~ "Login incorreto"
     end
   end
 
@@ -47,7 +55,7 @@ defmodule BankWeb.AccountControllerTest do
                "birth_date" => "2010-04-17",
                "city" => "some city",
                "country" => "some country",
-               "cpf" => "13451520",
+               "cpf" => "123.456.789-00",
                "email" => "some@email.com",
                "gender" => "some gender",
                "name" => "some name",
@@ -76,7 +84,7 @@ defmodule BankWeb.AccountControllerTest do
                "birth_date" => "2011-05-18",
                "city" => "some updated city",
                "country" => "some updated country",
-               "cpf" => "13451520",
+               "cpf" => "987.654.321-00",
                "email" => "someupdated@email.com",
                "gender" => "some updated gender",
                "name" => "some updated name",

@@ -1,21 +1,15 @@
 defmodule BankWeb.IndicationsController do
   use BankWeb, :controller
 
-  alias BankWeb.Repositories.{
-    Accounts,
-    Indications
-  }
+  import BankWeb.Utils.Auth, only: [current_user: 1]
+  alias BankWeb.Repositories.Indications
 
   action_fallback BankWeb.FallbackController
 
-  # WIP
-  def index(conn, %{"cpf_number" => number}) do
-    indications = number
-    |> Accounts.get_by_cpf()
-    |> Indications.list_indications_from_account()
-
-    conn
-    |> put_status(:ok)
-    |> render("index.json", indications: indications)
+  def index(conn, _params) do
+    with {:ok, indications} <- current_user(conn) |> Indications.list_indications_from_account() do
+      conn
+      |> render("index.json", indications: indications)
+    end
   end
 end
