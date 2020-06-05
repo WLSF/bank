@@ -21,11 +21,11 @@ defmodule BankWeb.AccountController do
           |> put_status(:bad_request)
           |> json(%{message: "Código de referência inválido"})
         end
+      else
+        conn
+        |> put_status(:created)
+        |> render("show.json", account: account)
       end
-
-      conn
-      |> put_status(:created)
-      |> render("show.json", account: account)
     end
   end
 
